@@ -1,0 +1,40 @@
+# Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual environment
+venv/
+.env/
+
+# Flask instance folder
+instance/
+
+# Flask PID file
+*.pid
+
+# Environment variables or sensitive information
+.env
+*.env
+
+# IDE/editor files (e.g. VS Code, PyCharm, etc.)
+.vscode/
+.idea/
+
+# macOS system files
+.DS_Store
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints
+
+# MongoDB database files
+*.bson
+*.json
+
+# logs
+*.log
+
+# Test coverage reports
+.coverage
+nosetests.xml
+py
