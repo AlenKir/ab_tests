@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template
 from services.experiments import ExperimentService
 from services.statistics import StatisticsService
 
@@ -20,3 +20,8 @@ def get_experiments():
 def statistics():
     stats = StatisticsService.get_statistics()
     return jsonify(stats)
+
+
+@ab_routes.route('/', methods=['GET'])
+def about():
+    return render_template("about.html")

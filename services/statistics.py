@@ -1,4 +1,8 @@
-from app import mongo
+
+def get_mongo():
+    from app import mongo
+    return mongo
+
 
 
 class StatisticsService:
@@ -9,7 +13,7 @@ class StatisticsService:
         for experiment in ['button_color', 'price']:
             options_count = {}
 
-            assignments = mongo.db.experiment_assignments.find()
+            assignments = get_mongo().experiment_assignments.find()
 
             for assignment in assignments:
                 value = assignment["experiments"].get(experiment)
