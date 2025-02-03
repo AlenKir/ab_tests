@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+</head>
+<body>
+    <h2>To-Do List</h2>
+    <ul>
+        <li>Return a list of experiments for each Device-Token</li>
+        <li>Ensure devices keep the same experiment assignments once assigned</li>
+        <li>Exclude existing devices from new experiments (only for new devices)</li>
+        <li>Create a statistics page</li>
+        <li>Write and run tests</li>
+        <li>Deploy the application</li>
+    </ul>
+
+    <h2>Database Schema</h2>
+
+    <h3>Collections</h3>
+
+    <h4>1. Devices</h4>
+    <p>Stores only device IDs.</p>
+    <pre>
+    {
+        "_id": "device_123",
+        "created_at": "2025-02-02T12:00:00Z"
+    }
+    </pre>
+
+    <h4>2. Experiment</h4>
+    <p>Name of the experiment, options with their probabilities.</p>
+    <pre>
+    {
+        "_id": "65b8c1f2a9e8f7e2a8d5b9f1",
+        "key": "button_color",
+        "options": {
+            "#FF0000": 0.75,
+            "#00FF00": 0.1,
+            "#0000FF": 0.15
+        },
+        "created_at": "2025-02-02T12:00:00Z"
+    },
+    {
+        "_id": "65b8c1f3b2a8f7e2a8d5b9f2",
+        "key": "price",
+        "options": {
+            "10": 0.75,
+            "20": 0.1,
+            "50": 0.05,
+            "5": 0.1
+        },
+        "created_at": "2025-02-03T14:30:00Z"
+    }
+    </pre>
+
+    <h4>3. Experiment Assignments</h4>
+    <p>Maps devices to assigned experiments. Example:</p>
+    <pre>
+    {
+        "device_id": "fake_token_123",
+        "experiments": {
+            "button_color": "#00FF00",
+            "price": 20
+        },
+        "assigned_at": "2025-02-02T12:05:00Z"
+    }
+    </pre>
+
+</body>
+</html>

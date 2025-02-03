@@ -1,4 +1,4 @@
-from app import mongo
+from db import mongo
 
 
 class StatisticsService:

@@ -1,4 +1,5 @@
-from app import mongo
+from datetime import datetime
+from db import mongo
 
 
 class Device:
@@ -8,4 +9,4 @@ class Device:
 
     @staticmethod
     def create(device_token):
-        mongo.db.devices.insert_one({"id": device_token})
+        mongo.db.devices.insert_one({"id": device_token, "created_at": datetime.utcnow()})

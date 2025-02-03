@@ -1,4 +1,5 @@
-from app import mongo
+from datetime import datetime
+from db import mongo
 
 
 class ExperimentAssignment:
@@ -10,5 +11,6 @@ class ExperimentAssignment:
     def create(device_token, experiments_data):
         mongo.db.experiment_assignments.insert_one({
             "device_id": device_token,
-            "experiments": experiments_data
+            "experiments": experiments_data,
+            "created_at": datetime.utcnow()
         })
