@@ -1,10 +1,6 @@
 import random
 from datetime import datetime
-
-
-def get_mongo():
-    from app import mongo
-    return mongo
+from db import mongo
 
 
 class Experiment:
@@ -15,11 +11,11 @@ class Experiment:
             "options": options,
             "created_at": datetime.utcnow()
         }
-        get_mongo().experiments.insert_one(experiment_data)
+        mongo.db.experiments.insert_one(experiment_data)
 
     @staticmethod
     def get_experiments():
-        return list(get_mongo().experiments.find())
+        return list(mongo.db.experiments.find())
 
     @staticmethod
     def generate_experiment_data():
@@ -38,8 +34,6 @@ class Experiment:
 
             selected_option = random.choices(values, probabilities)[0]
             results[experiment_name] = selected_option
-
-            # print(f"Experiment: {experiment_name}, Selected option: {selected_option}")
 
         return results
 
