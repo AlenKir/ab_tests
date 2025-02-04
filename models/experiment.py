@@ -36,5 +36,3 @@ class Experiment:
             results[experiment_name] = selected_option
 
         return results
-
-
