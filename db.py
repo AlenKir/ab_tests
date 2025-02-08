@@ -26,10 +26,10 @@ DEFAULT_EXPERIMENTS = {
 
 def setup_experiments(mongo):
     for experiment_name, data in DEFAULT_EXPERIMENTS.items():
-        existing_experiment = mongo.db.experiments.find_one({"experiment_name": experiment_name})
+        existing_experiment = mongo.db.experiments.find_one({"name": experiment_name})
         if not existing_experiment:
             mongo.db.experiments.insert_one({
-                "experiment_name": experiment_name,
+                "name": experiment_name,
                 "options": data["options"],
                 "created_at": datetime.utcnow()
             })

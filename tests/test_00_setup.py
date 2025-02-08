@@ -12,7 +12,7 @@ def test_setup(patch_mongo):
     from db import DEFAULT_EXPERIMENTS as expected_experiments
 
     for experiment_name, data in expected_experiments.items():
-        experiment = experiments_collection.find_one({"experiment_name": experiment_name})
+        experiment = experiments_collection.find_one({"name": experiment_name})
         assert experiment is not None
         assert experiment["options"] == data["options"]
         assert isinstance(experiment["created_at"], datetime)
