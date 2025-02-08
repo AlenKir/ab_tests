@@ -9,9 +9,9 @@ def test_setup(patch_mongo):
 
     experiments_collection = mongo.db.experiments
 
-    from db import DEFAULT_EXPERIMENTS as expected_experiments
+    from db import DEFAULT_EXPERIMENTS
 
-    for experiment_name, data in expected_experiments.items():
+    for experiment_name, data in DEFAULT_EXPERIMENTS.items():
         experiment = experiments_collection.find_one({"name": experiment_name})
         assert experiment is not None
         assert experiment["options"] == data["options"]
