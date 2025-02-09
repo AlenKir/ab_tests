@@ -14,6 +14,7 @@ def create_app_with_config(config=None):
     return app
 
 
+app = create_app_with_config(Config)
+
 if __name__ == "__main__":
-    app = create_app_with_config(Config)
     app.run(debug=True)
