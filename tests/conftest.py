@@ -4,6 +4,9 @@ import pytest
 import sys
 import os
 
+from flask.testing import FlaskClient
+from pymongo import MongoClient
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from app import create_app_with_config
@@ -19,13 +22,27 @@ def app(request):
         yield test_app
 
 
+@pytest.fixture
+def client(app) -> FlaskClient:
+    return app.test_client()
+
+
 @pytest.fixture(autouse=True)
 def patch_mongo(monkeypatch):
-    db = mongomock.MongoClient()
+    test_client = MongoClient(TestingConfig.MONGO_URI)
+    db = test_client.get_database()
     setup_experiments(db)
 
     def fake_mongo():
-        return db
+        return test_client
 
     monkeypatch.setattr('db.mongo', fake_mongo)
-    return db
+    yield db
+    test_client.drop_database(TestingConfig.MONGO_DB_NAME)
+
+
+@pytest.fixture
+def clean_db(patch_mongo):
+    for collection_name in patch_mongo.list_collection_names():
+        patch_mongo.db[collection_name].delete_many({})
+    setup_experiments(patch_mongo)

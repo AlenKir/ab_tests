@@ -7,7 +7,7 @@ class Experiment:
     @staticmethod
     def create_experiment(name, options):
         experiment_data = {
-            "experiment_name": name,
+            "name": name,
             "options": options,
             "created_at": datetime.utcnow()
         }
@@ -27,7 +27,7 @@ class Experiment:
         results = {}
 
         for experiment in experiments:
-            experiment_name = experiment['experiment_name']
+            experiment_name = experiment['name']
             options = experiment["options"]
             values = list(options.keys())
             probabilities = list(options.values())
@@ -36,5 +36,3 @@ class Experiment:
             results[experiment_name] = selected_option
 
         return results
-
-
