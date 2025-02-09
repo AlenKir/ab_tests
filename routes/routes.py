@@ -19,7 +19,7 @@ def get_experiments():
 @ab_routes.route('/statistics', methods=['GET'])
 def statistics():
     stats = StatisticsService.get_statistics()
-    return jsonify(stats)
+    return render_template("statistics.html", stats=stats)
 
 
 @ab_routes.route('/', methods=['GET'])

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Statistics</title>
+    <style>
+        body {
+            margin: 10px;
+            padding: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .chart-container {
+            margin: 20px auto;
+            height: 250px;
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Statistics: test, total devices involved, distribution of options</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Test</th>
+                <th>All devices</th>
+                <th>Distribution (Chart)</th>
+                <th>Distribution (Text)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for experiment in stats %}
+            <tr>
+                <td>{{ experiment.name }}</td>
+                <td>{{ experiment.total_devices }}</td>
+                <td>
+                    <div class="chart-container">
+                        <canvas id="chart_{{ loop.index }}"></canvas>
+                    </div>
+                </td>
+                <td>
+                    {% for option, count in experiment.options.items() %}
+                        {{ option }}: {{ count }}<br>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        {% for experiment in stats %}
+            var ctx = document.getElementById('chart_{{ loop.index }}').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: {{ experiment.options.keys() | list | tojson }},
+                    datasets: [{
+                        label: 'Options',
+                        data: {{ experiment.options.values() | list | tojson }},
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#FF5733'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw + ' device(s)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        {% endfor %}
+    </script>
+
+</body>
+</html>
