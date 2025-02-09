@@ -8,9 +8,9 @@ mongo = PyMongo()
 DEFAULT_EXPERIMENTS = {
     "button_color": {
         "options": {
-            "#FF0000": 0.75,
-            "#00FF00": 0.1,
-            "#0000FF": 0.15
+            "#FF0000": 1/3,
+            "#00FF00": 1/3,
+            "#0000FF": 1/3
         }
     },
     "price": {

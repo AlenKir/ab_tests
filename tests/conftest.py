@@ -38,4 +38,11 @@ def patch_mongo(monkeypatch):
 
     monkeypatch.setattr('db.mongo', fake_mongo)
     yield db
-    test_client.drop_database("TEST_ab_test_db")
+    test_client.drop_database(TestingConfig.MONGO_DB_NAME)
+
+
+@pytest.fixture
+def clean_db(patch_mongo):
+    for collection_name in patch_mongo.list_collection_names():
+        patch_mongo.db[collection_name].delete_many({})
+    setup_experiments(patch_mongo)

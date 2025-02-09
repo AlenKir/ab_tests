@@ -1,6 +1,9 @@
+import math
 import uuid
 
-from models import Experiment
+import pytest
+
+from models import Experiment, Device
 
 
 def generate_random_token():
@@ -15,7 +18,7 @@ def test_get_experiments(client):
     assert response.status_code == 200, f"Expected 200, got {response.status_code}"
 
 
-def test_same_experiments_per_token(client):
+def test_same_experiments_per_device(client):
     headers = {
         "Device-Token": generate_random_token()
     }
@@ -59,5 +62,39 @@ def test_only_new_experiments(client):
 
     assert len(new_experiments) - len(old_experiments) == 1
 
+    assert old_experiments.keys() <= new_experiments.keys(), f"Old experiments should be included"
+
     assert new_experiments['header_text_alignment'] in options.keys(), \
         f"Invalid value for header_text_alignment: {new_experiments['header_text_alignment']}"
+
+
+@pytest.mark.usefixtures("clean_db")
+def test_distribution_db(patch_mongo, client):
+    color_assignments = []
+    total_count = 600
+    distribution = 1/3
+    expected_count = total_count * distribution
+    sigma = math.sqrt(total_count * distribution * (1 - distribution))
+    z_score = 2.576
+    lower_bound = expected_count - z_score * sigma
+    upper_bound = expected_count + z_score * sigma
+
+    for i in range(total_count):
+        headers = {
+            "Device-Token": generate_random_token()
+        }
+        response = client.get("/get_experiments", headers=headers)
+        experiments = response.json
+        assert "button_color" in experiments
+        color_assignments.append(experiments["button_color"])
+
+    unique_colors = set(color_assignments)
+    assert len(unique_colors) == 3
+    color_counts = {color: 0 for color in unique_colors}
+
+    for color in color_assignments:
+        color_counts[color] += 1
+
+    for color in unique_colors:
+        count = color_counts[color]
+        assert lower_bound <= count <= upper_bound, f"Color {color} was assigned {count} times, expected {lower_bound, upper_bound}"
