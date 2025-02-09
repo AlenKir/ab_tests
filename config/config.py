@@ -1,10 +1,16 @@
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+
 class Config:
-    MONGO_URI = "mongodb://localhost:27017/ab_test_db"
+    MONGO_URI = os.getenv("MONGO_URI")
+    MONGO_DB_NAME = os.getenv("MONGO_DB_NAME")
     TESTING = False
-    MONGO_DB_NAME = "ab_test_db"
 
 
 class TestingConfig(Config):
+    MONGO_URI = os.getenv("TEST_MONGO_URI")
+    MONGO_DB_NAME = os.getenv("TEST_MONGO_DB_NAME")
     TESTING = True
-    MONGO_URI = "mongodb://localhost:27017/TEST_ab_test_db"
-    MONGO_DB_NAME = "TEST_ab_test_db"
