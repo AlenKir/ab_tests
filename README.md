@@ -27,7 +27,5 @@ Device-Token: device_123
     "price": 10
 }
 ```
-<div style="display: flex; justify-content: space-around;">
-  <img src="images/postman.jpg" width="300" />
-  <img src="images/statistics_page.jpg" width="300" />
-</div>
+
+![Postman](images/postman.jpg)
