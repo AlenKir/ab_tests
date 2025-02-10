@@ -26,5 +26,3 @@ Device-Token: device_123
     "button_color": "#FF0000",
     "price": 10
 }
-![photo_2025-02-10_13-47-01](https://github.com/user-attachments/assets/8ff3dbd9-c152-4522-8486-4030fb05a828)
-![image](https://github.com/user-attachments/assets/acd72cab-82f5-4ee4-b6d8-07ef3042dd76)
