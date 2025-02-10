@@ -1,4 +1,4 @@
-﻿# A simple **REST API** for managing A/B testing
+# A simple **REST API** for managing A/B testing
 Ensures that devices consistently receive the same experiment assignments and excludes existing devices from new experiments.
 
 - **Device-Specific Experiment Assignments**  
@@ -26,3 +26,8 @@ Device-Token: device_123
     "button_color": "#FF0000",
     "price": 10
 }
+```
+<div style="display: flex; justify-content: space-around;">
+  <img src="images/postman.jpg" width="300" />
+  <img src="images/statistics_page.jpg" width="300" />
+</div>

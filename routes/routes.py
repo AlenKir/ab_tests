@@ -16,12 +16,7 @@ def get_experiments():
     return jsonify(experiments_data)
 
 
-@ab_routes.route('/statistics', methods=['GET'])
-def statistics():
+@ab_routes.route('/', methods=['GET'])
+def index():
     stats = StatisticsService.get_statistics()
     return render_template("statistics.html", stats=stats)
-
-
-@ab_routes.route('/', methods=['GET'])
-def about():
-    return render_template("about.html")
